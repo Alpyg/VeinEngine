@@ -15,7 +15,7 @@
 #endif
 
 #if defined(VEIN_ENABLE_ASSERTS) && defined(VEIN_PLATFORM_WINDOWS)
-    #define VEIN_ASSERT(x, ...) { if(!(x)) { VEIN_ERROR("Assertion Failed: {0}, File: {1}, Line: {2}", __VA_ARGS__, __FILE__, __LINE__); __debugbreak(); } }
+    #define VEIN_ASSERT(x, ...) { if(!(x)) { VEIN_ERROR("Assertion Failed: {0}. File: {1}. Line: {2}", __VA_ARGS__, __FILE__, __LINE__); __debugbreak(); } }
 #else
     #define VEIN_ASSERT(x, ...)
 #endif
