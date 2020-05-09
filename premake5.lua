@@ -76,7 +76,7 @@ project "VeinEngine"
 		systemversion "latest"
 
 		defines {
-			"VEIN_PLATFORM_WINDOWS",
+			"VN_PLATFORM_WINDOWS",
 			"GLFW_INCLUDE_NONE"
 		}
 
@@ -88,7 +88,7 @@ project "VeinEngine"
 		systemversion "latest"
 
 		defines {
-			"VEIN_PLATFORM_LINUX",
+			"VN_PLATFORM_LINUX",
 			"GLFW_INCLUDE_NONE"
 		}
 
@@ -97,18 +97,18 @@ project "VeinEngine"
 		}
 
 	filter "configurations:Debug"
-		defines "VEIN_DEBUG"
+		defines "VN_DEBUG"
 		runtime "Debug"
 		symbols "on"
 
 		defines {
-			"VEIN_ENABLE_ASSERTS",
-			"VEIN_PROFILE",
+			"VN_ENABLE_ASSERTS",
+			"VN_PROFILE",
 			"_CRT_SECURE_NO_WARNINGS"
 		}
 
 	filter "configurations:Release"
-		defines "VEIN_RELEASE"
+		defines "VN_RELEASE"
 		runtime "Release"
 		optimize "on"
 
@@ -154,27 +154,27 @@ project "VeinSandbox"
 		systemversion "latest"
 
 		defines {
-			"VEIN_PLATFORM_WINDOWS"
+			"VN_PLATFORM_WINDOWS"
 		}
 	
 	filter "system:linux"
 		systemversion "latest"
 
 		defines {
-			"VEIN_PLATFORM_LINUX"
+			"VN_PLATFORM_LINUX"
 		}
 
 	filter "configurations:Debug"
-		defines "VEIN_DEBUG"
+		defines "VN_DEBUG"
 		runtime "Debug"
 		symbols "on"
 
 		defines {
-			"VEIN_ENABLE_ASSERTS",
+			"VN_ENABLE_ASSERTS",
 			"_CRT_SECURE_NO_WARNINGS"
 		}
 
 	filter "configurations:Release"
-		defines "VEIN_RELEASE"
+		defines "VN_RELEASE"
 		runtime "Release"
 		optimize "on"

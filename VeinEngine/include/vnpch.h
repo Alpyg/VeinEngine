@@ -12,6 +12,7 @@
 #include <unordered_set>
 
 #include "Core/Core.h"
+#include "Core/Assert/Assert.h"
 
 #ifdef VEIN_PLATFORM_WINDOWS
     #include <Windows.h>
