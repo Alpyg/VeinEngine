@@ -24,6 +24,7 @@ IncludeDir["glad"] = "VeinEngine/dependencies/glad/include"
 IncludeDir["glm"] = "VeinEngine/dependencies/glm"
 IncludeDir["imgui"] = "VeinEngine/dependencies/imgui"
 IncludeDir["stb_image"] = "VeinEngine/dependencies/stb_image"
+IncludeDir["catch2"] = "VeinEngine/dependencies/catch2"
 IncludeDir["assimp"] = "VeinEngine/dependencies/assimp/include"
 
 group "Dependencies"
@@ -56,6 +57,7 @@ project "VeinEngine"
 		"%{IncludeDir.glad}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.catch2}",
 		"%{IncludeDir.assimp}",
 		"%{IncludeDir.assimp}/../build/include"
 	}
@@ -63,7 +65,6 @@ project "VeinEngine"
 	links {
 		"glad",
 		"glfw",
-		"imgui",
 		"opengl32.lib"
 	}
 
@@ -81,7 +82,8 @@ project "VeinEngine"
 		}
 
 		postbuildcommands {
-			"{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/VeinSandbox/"
+			"{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/VeinSandbox/",
+			"{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/VeinTest/"
 		}
 			
 	filter "system:linux"
@@ -93,7 +95,8 @@ project "VeinEngine"
 		}
 
 		postbuildcommands {
-			"{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/VeinSandbox/"
+			"{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/VeinSandbox/",
+			"{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/VeinTest/"
 		}
 
 	filter "configurations:Debug"
@@ -104,6 +107,73 @@ project "VeinEngine"
 		defines {
 			"VN_ENABLE_ASSERTS",
 			"VN_PROFILE",
+			"_CRT_SECURE_NO_WARNINGS"
+		}
+
+	filter "configurations:Release"
+		defines "VN_RELEASE"
+		runtime "Release"
+		optimize "on"
+
+
+project "VeinTest"
+	location "VeinTest"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "On"
+	
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+	
+	files {
+		"%{prj.name}/include/**.h",
+		"%{prj.name}/src/**.cpp",
+	}
+	
+	includedirs {
+		"%{prj.name}/include/",
+		"VeinEngine/include/",
+		"%{IncludeDir.spdlog}",
+		"%{IncludeDir.glfw}",
+		"%{IncludeDir.glad}",
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.imgui}",
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.catch2}",
+		"%{IncludeDir.assimp}",
+		"%{IncludeDir.assimp}/../build/include"
+	}
+
+	links {
+		"VeinEngine"
+    }
+
+	defines {
+		"_CRT_SECURE_NO_WARNINGS"
+    }
+	
+	filter "system:windows"
+		systemversion "latest"
+
+		defines {
+			"VN_PLATFORM_WINDOWS"
+		}
+	
+	filter "system:linux"
+		systemversion "latest"
+
+		defines {
+			"VN_PLATFORM_LINUX"
+		}
+
+	filter "configurations:Debug"
+		defines "VN_DEBUG"
+		runtime "Debug"
+		symbols "on"
+
+		defines {
+			"VN_ENABLE_ASSERTS",
 			"_CRT_SECURE_NO_WARNINGS"
 		}
 
@@ -137,6 +207,7 @@ project "VeinSandbox"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.imgui}",
 		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.catch2}",
 		"%{IncludeDir.assimp}",
 		"%{IncludeDir.assimp}/../build/include"
 	}
