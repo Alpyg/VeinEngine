@@ -20,6 +20,20 @@ namespace Vein
         _least = (_least & 0x3FFFFFFFFFFFFFFFULL) | 0x8000000000000000ULL;
     }
 
+    UUID::UUID(const char* uuidStr)
+    {
+        UUID uuid = FromString(uuidStr);
+        _most = uuid._most;
+        _least = uuid._least;
+    }
+
+    UUID::UUID(const String& uuidStr)
+    {
+        UUID uuid = FromString(uuidStr);
+        _most = uuid._most;
+        _least = uuid._least;
+    }
+
     VN_API UUID& UUID::operator=(const UUID& u)
     {
         _most = u._most; _least = u._least;
@@ -49,7 +63,7 @@ namespace Vein
     VN_API UUID UUID::FromString(String str)
     {
         UUID uuid;
-        String uuidStr = str.remove(str.begin(), str.end(), '-');
+        String uuidStr = str.replace('-', "");
     
         static std::stringstream ss;
         ss << uuidStr.substr(0, 16);
@@ -69,6 +83,15 @@ namespace Vein
     };
     VN_API bool operator!=(const UUID& lhs, const UUID& rhs) {
         return lhs._most != rhs._most || lhs._least != rhs._least;
+    };
+    VN_API bool operator>=(const UUID& lhs, const UUID& rhs) {
+        return lhs._most >= rhs._most || (lhs._most == rhs._most && lhs._least >= rhs._least);
+    };
+    VN_API bool operator<=(const UUID& lhs, const UUID& rhs) {
+        return lhs._most <= rhs._most || (lhs._most == rhs._most && lhs._least <= rhs._least);
+    };
+    VN_API bool operator>(const UUID& lhs, const UUID& rhs) {
+        return lhs._most > rhs._most || (lhs._most == rhs._most && lhs._least > rhs._least);
     };
     VN_API bool operator<(const UUID& lhs, const UUID& rhs) {
         return lhs._most < rhs._most || (lhs._most == rhs._most && lhs._least < rhs._least);

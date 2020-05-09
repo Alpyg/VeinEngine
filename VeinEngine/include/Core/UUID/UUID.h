@@ -9,6 +9,8 @@ namespace Vein
     {
     public:
         VN_API UUID();
+        VN_API UUID(const char* uuidStr);
+        VN_API UUID(const String& uuidStr);
         VN_API virtual ~UUID() = default;
         VN_API UUID& operator=(const UUID& value);
 
@@ -20,7 +22,10 @@ namespace Vein
 
         VN_API friend bool operator==(const UUID& lhs, const UUID& rhs);
         VN_API friend bool operator!=(const UUID& lhs, const UUID& rhs);
+        VN_API friend bool operator>(const UUID& lhs, const UUID& rhs);
         VN_API friend bool operator<(const UUID& lhs, const UUID& rhs);
+        VN_API friend bool operator>=(const UUID& lhs, const UUID& rhs);
+        VN_API friend bool operator<=(const UUID& lhs, const UUID& rhs);
     private:
         uint64_t _most;
         uint64_t _least;

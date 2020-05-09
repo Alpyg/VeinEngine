@@ -116,6 +116,8 @@ namespace Vein
         
         ins = &_data[beg];
         tmp = strstr(ins, &c);
+        if (tmp == NULL) return *this;
+
         for (count = 0; tmp = strstr(ins, &c); count++) {
             if (tmp > &_data[end]) break;
             ins = tmp + 1;
@@ -123,14 +125,13 @@ namespace Vein
         result_length = _length - count;
         tmp = new_data = new char[result_length + 1];
         
-        //tmp = strncpy(tmp, _data, &_data[beg] - _data + 1) + (&_data[beg] - _data + 1);
         while (count--) {
             ins = strstr(sub_data, &c);
             len_front = ins - sub_data;
             tmp = strncpy(tmp, sub_data, len_front) + len_front;
             sub_data += len_front + 1;
         }
-        strcpy(tmp, &_data[end] + 1);
+        strcpy(tmp, sub_data);
         
         return String(new_data, result_length);
     }

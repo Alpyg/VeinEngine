@@ -65,6 +65,12 @@ TEST_CASE("String Methods", "[string_methods]")
     REQUIRE(String("ABBBC").length() == 5);
 
     REQUIRE(String("ABBBC").replace("BBB", "B") == "ABC");
-    REQUIRE(String("ABBBC").remove(0, 1, 'B') == "ABBC");
     REQUIRE(String("ABBBC").substr(0, 2) == "AB");
+
+    REQUIRE(String("ABBBC").remove(0, 5, 'B') == "AC");
+    REQUIRE(String("ABBBC").remove(0, 4, 'B') == "AC");
+    REQUIRE(String("ABBBC").remove(0, 3, 'B') == "AC");
+    REQUIRE(String("ABBBC").remove(0, 2, 'B') == "ABC");
+    REQUIRE(String("ABBBC").remove(0, 1, 'B') == "ABBC");
+    REQUIRE(String("ABBBC").remove(0, 0, 'B') == "ABBBC");
 }
