@@ -1,0 +1,20 @@
+[submodule "VeinEngine/dependencies/glm"]
+	path = VeinEngine/dependencies/glm
+	url = https://github.com/g-truc/glm
+	ignore = dirty
+[submodule "VeinEngine/dependencies/spdlog"]
+	path = VeinEngine/dependencies/spdlog
+	url = https://github.com/gabime/spdlog
+	ignore = dirty
+[submodule "VeinEngine/dependencies/glfw"]
+	path = VeinEngine/dependencies/glfw
+	url = https://github.com/glfw/glfw
+	ignore = dirty
+[submodule "VeinEngine/dependencies/imgui"]
+	path = VeinEngine/dependencies/imgui
+	url = https://github.com/ocornut/imgui
+	ignore = dirty
+[submodule "VeinEngine/dependencies/assimp"]
+	path = VeinEngine/dependencies/assimp
+	url = https://github.com/assimp/assimp
+	ignore = dirty
