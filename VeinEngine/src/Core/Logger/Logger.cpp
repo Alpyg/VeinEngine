@@ -19,6 +19,8 @@ namespace Vein
 
     std::shared_ptr<spdlog::logger>& Logger::GetLogger()
     {
+        if (logger == nullptr) Init();
+
         return logger->m_Logger;
     }
 
