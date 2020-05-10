@@ -6,3 +6,5 @@
 
 #include "Core/String/String.h"
 #include "Core/UUID/UUID.h"
+
+#include "Core/Random/Random.h"
