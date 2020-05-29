@@ -59,18 +59,19 @@ TEST_CASE("String Operators", "[string_operators]")
 
 TEST_CASE("String Methods", "[string_methods]")
 {
+    String str("ABBBC");
 
-    REQUIRE(String("ABBBC").begin() == 0);
-    REQUIRE(String("ABBBC").end() == 5);
-    REQUIRE(String("ABBBC").length() == 5);
+    REQUIRE(str.begin() == str.c_str());
+    REQUIRE(str.end() == str.c_str() + str.length());
+    REQUIRE(str.length() == 5);
 
-    REQUIRE(String("ABBBC").replace("BBB", "B") == "ABC");
-    REQUIRE(String("ABBBC").substr(0, 2) == "AB");
+    REQUIRE(str.replace("BBB", "B") == "ABC");
+    REQUIRE(str.substr(0, 2) == "AB");
 
-    REQUIRE(String("ABBBC").remove(0, 5, 'B') == "AC");
-    REQUIRE(String("ABBBC").remove(0, 4, 'B') == "AC");
-    REQUIRE(String("ABBBC").remove(0, 3, 'B') == "AC");
-    REQUIRE(String("ABBBC").remove(0, 2, 'B') == "ABC");
-    REQUIRE(String("ABBBC").remove(0, 1, 'B') == "ABBC");
-    REQUIRE(String("ABBBC").remove(0, 0, 'B') == "ABBBC");
+    REQUIRE(str.remove(0, 5, 'B') == "AC");
+    REQUIRE(str.remove(0, 4, 'B') == "AC");
+    REQUIRE(str.remove(0, 3, 'B') == "AC");
+    REQUIRE(str.remove(0, 2, 'B') == "ABC");
+    REQUIRE(str.remove(0, 1, 'B') == "ABBC");
+    REQUIRE(str.remove(0, 0, 'B') == "ABBBC");
 }

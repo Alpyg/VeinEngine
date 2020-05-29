@@ -14,8 +14,8 @@ namespace Vein
 
         VN_API const char* c_str() const;
 
-        VN_API const size_t begin() const;
-        VN_API const size_t end() const;
+        VN_API const char* begin() const;
+        VN_API const char* end() const;
         VN_API size_t length() const;
 
         VN_API String replace(const String& str, const String& with);
@@ -77,8 +77,8 @@ namespace Vein
     private:
         VN_API String(char* c, size_t l);
 
-        char* _data;
-        size_t _length;
+        char* m_data;
+        size_t m_length;
     };
 
 }

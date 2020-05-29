@@ -13,7 +13,6 @@
 
 #include "Core/Core.h"
 #include "Core/Assert/Assert.h"
-#include "Core/String/String.h"
 
 #ifdef VEIN_PLATFORM_WINDOWS
     #include <Windows.h>

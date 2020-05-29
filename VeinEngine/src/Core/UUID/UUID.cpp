@@ -1,6 +1,8 @@
 #include "vnpch.h"
 #include "Core/UUID/UUID.h"
 
+#include "Core/Random/Random.h"
+
 #include <random>
 #include <iomanip>
 #include <sstream>
@@ -10,33 +12,30 @@ namespace Vein
 
     UUID::UUID()
     {
-        static std::random_device rd;
-        static std::uniform_int_distribution<uint64_t> dist(0, (uint64_t)(~0));
+        m_most = Random::Uint64();
+        m_least = Random::Uint64();
 
-        _most = dist(rd);
-        _least = dist(rd);
-
-        _most = (_most & 0xFFFFFFFFFFFF0FFFULL) | 0x0000000000004000ULL;
-        _least = (_least & 0x3FFFFFFFFFFFFFFFULL) | 0x8000000000000000ULL;
+        m_most = (m_most & 0xFFFFFFFFFFFF0FFFULL) | 0x0000000000004000ULL;
+        m_least = (m_least & 0x3FFFFFFFFFFFFFFFULL) | 0x8000000000000000ULL;
     }
 
     UUID::UUID(const char* uuidStr)
     {
         UUID uuid = FromString(uuidStr);
-        _most = uuid._most;
-        _least = uuid._least;
+        m_most = uuid.m_most;
+        m_least = uuid.m_least;
     }
 
     UUID::UUID(const String& uuidStr)
     {
         UUID uuid = FromString(uuidStr);
-        _most = uuid._most;
-        _least = uuid._least;
+        m_most = uuid.m_most;
+        m_least = uuid.m_least;
     }
 
     VN_API UUID& UUID::operator=(const UUID& u)
     {
-        _most = u._most; _least = u._least;
+        m_most = u.m_most; m_least = u.m_least;
         return *this;
     }
 
@@ -45,10 +44,10 @@ namespace Vein
         std::stringstream ss;
         ss << std::hex << std::nouppercase << std::setfill('0');
     
-        uint32_t a = (_most >> 32);
-        uint32_t b = (_most & 0xFFFFFFFF);
-        uint32_t c = (_least >> 32);
-        uint32_t d = (_least & 0xFFFFFFFF);
+        uint32_t a = (m_most >> 32);
+        uint32_t b = (m_most & 0xFFFFFFFF);
+        uint32_t c = (m_least >> 32);
+        uint32_t d = (m_least & 0xFFFFFFFF);
     
         ss << std::setw(8) << (a) << '-';
         ss << std::setw(4) << (b >> 16) << '-';
@@ -67,10 +66,10 @@ namespace Vein
     
         static std::stringstream ss;
         ss << uuidStr.substr(0, 16);
-        ss >> std::hex >> uuid._most;
+        ss >> std::hex >> uuid.m_most;
         ss.clear();
         ss << uuidStr.substr(16, 32);
-        ss >> std::hex >> uuid._least;
+        ss >> std::hex >> uuid.m_least;
         ss.clear();
     
         return uuid;
@@ -79,22 +78,22 @@ namespace Vein
 
 
     VN_API bool operator==(const UUID& lhs, const UUID& rhs) {
-        return lhs._most == rhs._most && lhs._least == rhs._least;
+        return lhs.m_most == rhs.m_most && lhs.m_least == rhs.m_least;
     };
     VN_API bool operator!=(const UUID& lhs, const UUID& rhs) {
-        return lhs._most != rhs._most || lhs._least != rhs._least;
+        return lhs.m_most != rhs.m_most || lhs.m_least != rhs.m_least;
     };
     VN_API bool operator>=(const UUID& lhs, const UUID& rhs) {
-        return lhs._most >= rhs._most || (lhs._most == rhs._most && lhs._least >= rhs._least);
+        return lhs.m_most >= rhs.m_most || (lhs.m_most == rhs.m_most && lhs.m_least >= rhs.m_least);
     };
     VN_API bool operator<=(const UUID& lhs, const UUID& rhs) {
-        return lhs._most <= rhs._most || (lhs._most == rhs._most && lhs._least <= rhs._least);
+        return lhs.m_most <= rhs.m_most || (lhs.m_most == rhs.m_most && lhs.m_least <= rhs.m_least);
     };
     VN_API bool operator>(const UUID& lhs, const UUID& rhs) {
-        return lhs._most > rhs._most || (lhs._most == rhs._most && lhs._least > rhs._least);
+        return lhs.m_most > rhs.m_most || (lhs.m_most == rhs.m_most && lhs.m_least > rhs.m_least);
     };
     VN_API bool operator<(const UUID& lhs, const UUID& rhs) {
-        return lhs._most < rhs._most || (lhs._most == rhs._most && lhs._least < rhs._least);
+        return lhs.m_most < rhs.m_most || (lhs.m_most == rhs.m_most && lhs.m_least < rhs.m_least);
     };
 
 }

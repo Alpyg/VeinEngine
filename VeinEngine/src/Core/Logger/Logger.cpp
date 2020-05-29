@@ -13,15 +13,15 @@ namespace Vein
         logger = new Logger();
         spdlog::set_pattern("%^[%T] %n: %v%$");
 
-        logger->_logger = spdlog::stdout_color_mt("VEIN");
-        logger->_logger->set_level(spdlog::level::trace);
+        logger->m_logger = spdlog::stdout_color_mt("VEIN");
+        logger->m_logger->set_level(spdlog::level::trace);
     }
 
     std::shared_ptr<spdlog::logger>& Logger::GetLogger()
     {
         if (logger == nullptr) Init();
 
-        return logger->_logger;
+        return logger->m_logger;
     }
 
 }
