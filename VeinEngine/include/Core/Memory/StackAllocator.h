@@ -8,11 +8,11 @@ namespace Vein
     class StackAllocator : public Allocator
     {
     public:
-        VN_API StackAllocator(size_t t_size, void* t_start);
+        VN_API StackAllocator(size_t t_Size, void* t_Start);
         VN_API ~StackAllocator();
 
-        VN_API void* allocate(size_t t_size, uint8_t t_alignment) override;
-        VN_API void deallocate(void* t_p) override;
+        VN_API void* allocate(size_t t_Size, uint8_t t_Alignment) override;
+        VN_API void deallocate(void* t_P) override;
 
     private:
         VN_API StackAllocator(const StackAllocator&);
@@ -33,7 +33,7 @@ namespace Vein
         void* previousPos;
         #endif 
 
-        void* m_currentPos;
+        void* m_CurrentPos;
     };
 
 }

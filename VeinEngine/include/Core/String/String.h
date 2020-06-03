@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 namespace Vein
 {
 
@@ -77,8 +79,8 @@ namespace Vein
     private:
         VN_API String(char* c, size_t l);
 
-        char* m_data;
-        size_t m_length;
+        char* m_Data;
+        size_t m_Length;
     };
 
 }

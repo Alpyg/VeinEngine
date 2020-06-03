@@ -6,16 +6,16 @@ namespace Vein
 
     String::String()
     {
-        m_length = 0;
-        m_data = new char('\0');
+        m_Length = 0;
+        m_Data = new char('\0');
     }
 
     String::String(char c)
     {
-        m_length = 1;
-        m_data = new char[m_length + 1];
-        m_data[0] = c;
-        m_data[1] = '\0';
+        m_Length = 1;
+        m_Data = new char[m_Length + 1];
+        m_Data[0] = c;
+        m_Data[1] = '\0';
     }
 
     String::String(const char* c)
@@ -24,54 +24,54 @@ namespace Vein
         {
             size_t n = 0;
             while (c[n] != '\0') n++;
-            m_length = n;
-            m_data = new char[n + 1];
-            strcpy(m_data, c);
+            m_Length = n;
+            m_Data = new char[n + 1];
+            strcpy(m_Data, c);
         }
         else
         {
-            m_length = 0;
-            m_data = new char[0];
+            m_Length = 0;
+            m_Data = new char[0];
         }
     }
 
     String::String(const String& s)
     {
-        m_length = s.length();
-        m_data = new char[m_length + 1];
-        strcpy(m_data, s.m_data);
+        m_Length = s.length();
+        m_Data = new char[m_Length + 1];
+        strcpy(m_Data, s.m_Data);
     }
 
     String::String(char* s, size_t l)
     {
-        m_length = l;
-        m_data = s;
+        m_Length = l;
+        m_Data = s;
     }
 
     String::~String()
     {
-        delete[] m_data;
+        delete[] m_Data;
     }
 
 
     const char* String::c_str() const {
-        return m_data;
+        return m_Data;
     }
     const char* String::begin() const {
-        return m_data;
+        return m_Data;
     }
     const char* String::end() const {
-        return m_data + m_length;
+        return m_Data + m_Length;
     }
 
     size_t String::length() const
     {
-        return m_length;
+        return m_Length;
     }
 
     String String::replace(const String& str, const String& with)
     {
-        char* old_data = m_data;
+        char* old_data = m_Data;
         char* new_data;
         char* ins;
         char* tmp;
@@ -79,21 +79,21 @@ namespace Vein
         size_t count;
         size_t result_length;
 
-        if (m_length == 0 || str.m_length == 0) return String();
+        if (m_Length == 0 || str.m_Length == 0) return String();
 
         ins = old_data;
         for (count = 0; tmp = strstr(ins, str.c_str()); count++) {
-            ins = tmp + str.m_length;
+            ins = tmp + str.m_Length;
         }
-        result_length = m_length + (with.m_length - str.m_length) * count;
+        result_length = m_Length + (with.m_Length - str.m_Length) * count;
         tmp = new_data = new char[result_length + 1];
 
         while (count--) {
             ins = strstr(old_data, str.c_str());
             len_front = ins - old_data;
             tmp = strncpy(tmp, old_data, len_front) + len_front;
-            tmp = strcpy(tmp, with.c_str()) + with.m_length;
-            old_data += len_front + str.m_length;
+            tmp = strcpy(tmp, with.c_str()) + with.m_Length;
+            old_data += len_front + str.m_Length;
         }
         strcpy(tmp, old_data);
 
@@ -102,7 +102,7 @@ namespace Vein
 
     String String::remove(size_t beg, size_t end, char c)
     {
-        char* sub_data = &m_data[beg];
+        char* sub_data = &m_Data[beg];
         char* new_data;
         char* ins;
         char* tmp;
@@ -110,17 +110,17 @@ namespace Vein
         size_t count;
         size_t result_length;
         
-        if (m_length == 0) return String();
+        if (m_Length == 0) return String();
         
-        ins = &m_data[beg];
+        ins = &m_Data[beg];
         tmp = strstr(ins, &c);
         if (tmp == NULL) return *this;
 
         for (count = 0; tmp = strstr(ins, &c); count++) {
-            if (tmp > &m_data[end]) break;
+            if (tmp > &m_Data[end]) break;
             ins = tmp + 1;
         }
-        result_length = m_length - count;
+        result_length = m_Length - count;
         tmp = new_data = new char[result_length + 1];
         
         while (count--) {
@@ -139,7 +139,7 @@ namespace Vein
         size_t length = len - pos;
         char* str = new char[length + (size_t)1];
 
-        str = strncpy(str, &m_data[pos], length);
+        str = strncpy(str, &m_Data[pos], length);
         str[length] = '\0';
         return String(str);
     }
@@ -148,25 +148,25 @@ namespace Vein
 
     char String::operator[] (size_t pos) const
     {
-        if (pos >= m_length) throw 1;
-        return m_data[pos];
+        if (pos >= m_Length) throw 1;
+        return m_Data[pos];
     }
 
     char& String::operator[] (size_t pos)
     {
-        if (pos >= m_length) throw 1;
-        return m_data[pos];
+        if (pos >= m_Length) throw 1;
+        return m_Data[pos];
     }
 
 
 
     String& String::operator=(char c)
     {
-        delete[] m_data;
-        m_length = 1;
-        m_data = new char[m_length + 1];
+        delete[] m_Data;
+        m_Length = 1;
+        m_Data = new char[m_Length + 1];
 
-        m_data[0] = c;
+        m_Data[0] = c;
         return *this;
     }
 
@@ -174,11 +174,11 @@ namespace Vein
     {
         String s(c);
 
-        delete[] m_data;
-        m_length = s.length();
-        m_data = new char[m_length + 1];
+        delete[] m_Data;
+        m_Length = s.length();
+        m_Data = new char[m_Length + 1];
 
-        strcpy(m_data, s.m_data);
+        strcpy(m_Data, s.m_Data);
         return *this;
     }
 
@@ -186,25 +186,25 @@ namespace Vein
     {
         if (this == &s) return *this;
 
-        delete[] m_data;
-        m_length = s.length();
-        m_data = new char[m_length + 1];
+        delete[] m_Data;
+        m_Length = s.length();
+        m_Data = new char[m_Length + 1];
 
-        strcpy(m_data, s.m_data);
+        strcpy(m_Data, s.m_Data);
         return *this;
     }
 
     String& String::operator+=(const String& s)
     {
-        size_t len = m_length + s.length();
+        size_t len = m_Length + s.length();
         char* str = new char[len + 1];
 
-        strcpy(str, m_data);
-        strcat(str, s.m_data);
+        strcpy(str, m_Data);
+        strcat(str, s.m_Data);
 
-        delete[] m_data;
-        m_length = len;
-        m_data = str;
+        delete[] m_Data;
+        m_Length = len;
+        m_Data = str;
         return *this;
     }
 

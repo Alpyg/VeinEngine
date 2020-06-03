@@ -6,20 +6,20 @@
 namespace Vein
 {
 
-    PoolAllocator::PoolAllocator(size_t t_objectSize, uint8_t t_objectAlignment, size_t t_size, void* t_mem) : Allocator(t_size, t_mem), m_objectSize(t_objectSize), m_objectAlignment(t_objectAlignment)
+    PoolAllocator::PoolAllocator(size_t t_ObjectSize, uint8_t t_ObjectAlignment, size_t t_Size, void* t_Mem) : Allocator(t_Size, t_Mem), m_ObjectSize(t_ObjectSize), m_ObjectAlignment(t_ObjectAlignment)
     {
-        VN_ASSERT(t_objectSize >= sizeof(void*), "Object size has to be larger than a pointer's size");
+        VN_ASSERT(t_ObjectSize >= sizeof(void*), "Object size has to be larger than a pointer's size");
 
         //Calculate adjustment needed to keep object correctly aligned 
-        uint8_t adjustment = pointer_math::alignForwardAdjustment(t_mem, t_objectAlignment);
-        m_freeList = (void**)pointer_math::add(t_mem, adjustment);
-        size_t numObjects = (t_size - adjustment) / t_objectSize;
-        void** p = m_freeList;
+        uint8_t adjustment = pointer_math::alignForwardAdjustment(t_Mem, t_ObjectAlignment);
+        m_FreeList = (void**)pointer_math::add(t_Mem, adjustment);
+        size_t numObjects = (t_Size - adjustment) / t_ObjectSize;
+        void** p = m_FreeList;
 
         //Initialize free blocks list 
         for (size_t i = 0; i < numObjects - 1; i++)
         {
-            *p = pointer_math::add(p, t_objectSize);
+            *p = pointer_math::add(p, t_ObjectSize);
             p = (void**)*p;
         }
 
@@ -28,26 +28,26 @@ namespace Vein
 
     PoolAllocator::~PoolAllocator()
     {
-        m_freeList = nullptr;
+        m_FreeList = nullptr;
     }
 
-    void* PoolAllocator::allocate(size_t t_size, uint8_t t_alignment)
+    void* PoolAllocator::allocate(size_t t_Size, uint8_t t_Alignment)
     {
-        VN_ASSERT(t_size == m_objectSize && t_alignment == m_objectAlignment, "Invalid size");
-        if (m_freeList == nullptr) return nullptr;
-        void* p = m_freeList;
-        m_freeList = (void**)(*m_freeList);
-        m_usedMemory += t_size;
-        m_numAllocations++;
+        VN_ASSERT(t_Size == m_ObjectSize && t_Alignment == m_ObjectAlignment, "Invalid size");
+        if (m_FreeList == nullptr) return nullptr;
+        void* p = m_FreeList;
+        m_FreeList = (void**)(*m_FreeList);
+        m_UserMemory += t_Size;
+        m_NumAllocations++;
         return p;
     }
 
-    void PoolAllocator::deallocate(void* t_p)
+    void PoolAllocator::deallocate(void* t_P)
     {
-        *((void**)t_p) = m_freeList;
-        m_freeList = (void**)t_p;
-        m_usedMemory -= m_objectSize;
-        m_numAllocations--;
+        *((void**)t_P) = m_FreeList;
+        m_FreeList = (void**)t_P;
+        m_UserMemory -= m_ObjectSize;
+        m_NumAllocations--;
     }
 
 }

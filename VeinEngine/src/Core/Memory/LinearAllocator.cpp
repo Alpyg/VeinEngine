@@ -6,32 +6,32 @@
 namespace Vein
 {
 
-    LinearAllocator::LinearAllocator(size_t t_size, void* t_start) : Allocator(t_size, t_start), m_currentPos(t_start)
+    LinearAllocator::LinearAllocator(size_t t_Size, void* t_Start) : Allocator(t_Size, t_Start), m_CurrentPos(t_Start)
     {
-        VN_ASSERT(t_size > 0, "Invalid size");
+        VN_ASSERT(t_Size > 0, "Invalid size");
     }
 
     LinearAllocator::~LinearAllocator()
     {
-        m_currentPos = nullptr;
+        m_CurrentPos = nullptr;
     }
 
-    void* LinearAllocator::allocate(size_t t_size, uint8_t t_alignment)
+    void* LinearAllocator::allocate(size_t t_Size, uint8_t t_Alignment)
     {
-        VN_ASSERT(t_size != 0, "Invalid size");
-        uint8_t adjustment = pointer_math::alignForwardAdjustment(m_currentPos, t_alignment);
+        VN_ASSERT(t_Size != 0, "Invalid size");
+        uint8_t adjustment = pointer_math::alignForwardAdjustment(m_CurrentPos, t_Alignment);
 
-        if (m_usedMemory + adjustment + t_size > m_size) return nullptr;
+        if (m_UserMemory + adjustment + t_Size > m_Size) return nullptr;
 
-        uintptr_t aligned_address = (uintptr_t)m_currentPos + adjustment;
-        m_currentPos = (void*)(aligned_address + t_size);
-        m_usedMemory += t_size + adjustment;
-        m_numAllocations++;
+        uintptr_t aligned_address = (uintptr_t)m_CurrentPos + adjustment;
+        m_CurrentPos = (void*)(aligned_address + t_Size);
+        m_UserMemory += t_Size + adjustment;
+        m_NumAllocations++;
 
         return (void*)aligned_address;
     }
 
-    void LinearAllocator::deallocate(void* t_p)
+    void LinearAllocator::deallocate(void* t_P)
     {
         VN_WARN("Use clear() instead of deallocate(void* p)");
         clear();
@@ -39,9 +39,9 @@ namespace Vein
 
     void LinearAllocator::clear()
     {
-        m_numAllocations = 0;
-        m_usedMemory = 0;
-        m_currentPos = m_start;
+        m_NumAllocations = 0;
+        m_UserMemory = 0;
+        m_CurrentPos = m_Start;
     }
 
 }

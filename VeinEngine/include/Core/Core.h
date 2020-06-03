@@ -13,3 +13,7 @@
         #define VN_API
     #endif
 #endif
+
+#define BIT(x) (1 << x)
+
+#define VN_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)

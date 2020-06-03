@@ -13,7 +13,7 @@ namespace Vein
 
         VN_API static std::shared_ptr<spdlog::logger>& GetLogger();
     private:
-        std::shared_ptr<spdlog::logger> m_logger;
+        std::shared_ptr<spdlog::logger> m_Logger;
     };
 
 }

@@ -6,9 +6,9 @@
 namespace Vein
 {
 
-    StackAllocator::StackAllocator(size_t t_size, void* t_start) : Allocator(t_size, t_start), m_currentPos(t_start)
+    StackAllocator::StackAllocator(size_t t_Size, void* t_Start) : Allocator(t_Size, t_Start), m_CurrentPos(t_Start)
     {
-        VN_ASSERT(t_size > 0, "Invalid size");
+        VN_ASSERT(t_Size > 0, "Invalid size");
         #if VN_DEBUG 
         previousPos = nullptr;
         #endif 
@@ -20,17 +20,17 @@ namespace Vein
         previousPos = nullptr;
         #endif 
 
-        m_currentPos = nullptr;
+        m_CurrentPos = nullptr;
     }
 
-    void* StackAllocator::allocate(size_t t_size, uint8_t t_alignment)
+    void* StackAllocator::allocate(size_t t_Size, uint8_t t_Alignment)
     {
-        VN_ASSERT(t_size != 0, "Invalid size");
-        uint8_t adjustment = pointer_math::alignForwardAdjustmentWithHeader(m_currentPos, t_alignment, sizeof(AllocationHeader));
+        VN_ASSERT(t_Size != 0, "Invalid size");
+        uint8_t adjustment = pointer_math::alignForwardAdjustmentWithHeader(m_CurrentPos, t_Alignment, sizeof(AllocationHeader));
 
-        if (m_usedMemory + adjustment + t_size > m_size) return nullptr;
+        if (m_UserMemory + adjustment + t_Size > m_Size) return nullptr;
 
-        void* aligned_address = pointer_math::add(m_currentPos, adjustment);
+        void* aligned_address = pointer_math::add(m_CurrentPos, adjustment);
 
         //Add Allocation Header 
         AllocationHeader* header = (AllocationHeader*)(pointer_math::subtract(aligned_address, sizeof(AllocationHeader)));
@@ -41,27 +41,27 @@ namespace Vein
         previousPos = aligned_address;
         #endif 
 
-        m_currentPos = pointer_math::add(aligned_address, t_size);
-        m_usedMemory += t_size + adjustment;
-        m_numAllocations++;
+        m_CurrentPos = pointer_math::add(aligned_address, t_Size);
+        m_UserMemory += t_Size + adjustment;
+        m_NumAllocations++;
 
         return aligned_address;
     }
 
-    void StackAllocator::deallocate(void* t_p)
+    void StackAllocator::deallocate(void* t_P)
     {
-        VN_ASSERT(t_p == previousPos, "{0} has to be the last element of the stack", t_p);
+        VN_ASSERT(t_P == previousPos, "{0} has to be the last element of the stack", t_P);
 
         //Access the AllocationHeader in the bytes before p 
-        AllocationHeader* header = (AllocationHeader*)(pointer_math::subtract(t_p, sizeof(AllocationHeader)));
-        m_usedMemory -= (uintptr_t)m_currentPos - (uintptr_t)t_p + header->adjustment;
-        m_currentPos = pointer_math::subtract(t_p, header->adjustment);
+        AllocationHeader* header = (AllocationHeader*)(pointer_math::subtract(t_P, sizeof(AllocationHeader)));
+        m_UserMemory -= (uintptr_t)m_CurrentPos - (uintptr_t)t_P + header->adjustment;
+        m_CurrentPos = pointer_math::subtract(t_P, header->adjustment);
 
         #if VN_DEBUG 
         previousPos = header->previousAddress;
         #endif 
 
-        m_numAllocations--;
+        m_NumAllocations--;
     }
 
 }

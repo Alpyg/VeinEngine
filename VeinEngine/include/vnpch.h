@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <cstdint>
 #include <functional>
 #include <iomanip>
 #include <iostream>
@@ -13,7 +14,9 @@
 
 #include "Core/Core.h"
 #include "Core/Assert/Assert.h"
+#include "Core/Memory/Pointers.h"
+#include "Core/Math/Math.h"
 
-#ifdef VEIN_PLATFORM_WINDOWS
+#ifdef VN_PLATFORM_WINDOWS
     #include <Windows.h>
 #endif

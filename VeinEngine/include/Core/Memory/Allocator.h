@@ -10,32 +10,32 @@ namespace Vein
     class Allocator
     {
     public:
-        VN_API Allocator(size_t t_size, void* t_start)
+        VN_API Allocator(size_t t_Size, void* t_Start)
         {
-            m_start = t_start;
-            m_size = t_size;
-            m_usedMemory = 0;
-            m_numAllocations = 0;
+            m_Start = t_Start;
+            m_Size = t_Size;
+            m_UserMemory = 0;
+            m_NumAllocations = 0;
         }
 
         VN_API virtual ~Allocator()
         {
-            VN_ASSERT(m_numAllocations == 0 && m_usedMemory == 0, "Memory Leak Detected");
-            m_start = nullptr; m_size = 0;
+            VN_ASSERT(m_NumAllocations == 0 && m_UserMemory == 0, "Memory Leak Detected");
+            m_Start = nullptr; m_Size = 0;
         }
 
-        VN_API virtual void* allocate(size_t t_size, uint8_t t_alignment = 4) = 0;
+        VN_API virtual void* allocate(size_t t_Size, uint8_t t_Alignment = 4) = 0;
         VN_API virtual void deallocate(void* p) = 0;
-        VN_API void* getStart() const { return m_start; }
-        VN_API size_t getSize() const { return m_size; }
-        VN_API size_t getUsedMemory() const { return m_usedMemory; }
-        VN_API size_t getNumAllocations() const { return m_numAllocations; }
+        VN_API void* getStart() const { return m_Start; }
+        VN_API size_t getSize() const { return m_Size; }
+        VN_API size_t getUsedMemory() const { return m_UserMemory; }
+        VN_API size_t getNumAllocations() const { return m_NumAllocations; }
 
     protected:
-        void* m_start;
-        size_t m_size;
-        size_t m_usedMemory;
-        size_t m_numAllocations;
+        void* m_Start;
+        size_t m_Size;
+        size_t m_UserMemory;
+        size_t m_NumAllocations;
     };
 
     namespace allocator
