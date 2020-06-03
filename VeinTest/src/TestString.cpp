@@ -1,7 +1,7 @@
 #include <catch.hpp>
 
-#include "Core/Core.h"
-#include "Core/String/String.h"
+#include <Core/Core.h>
+#include <Core/String/String.h>
 
 using namespace Vein;
 

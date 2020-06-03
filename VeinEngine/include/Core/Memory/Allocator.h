@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include "Core/Assert/Assert.h"
 #include "Core/Logger/Logger.h"
 
 namespace Vein
